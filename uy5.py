@@ -1,3 +1,6 @@
-l = [[1, 2, 3], [4, 5, 6], [10, 11, 12], [7, 8, 9]]
-res = max(l, key=sum)
-print(res)
+def is_anagram(soz1, soz2):
+    return sorted(soz1.lower()) == sorted(soz2.lower())
+
+print(is_anagram("listen", "silent")) 
+print(is_anagram("apple", "angel"))  
+print(is_anagram("thing", "night"))  
