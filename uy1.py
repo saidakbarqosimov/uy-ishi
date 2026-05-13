@@ -1,8 +1,18 @@
-set1 = {1, 2, 3, 4, 5, 6}
-set2 = {4, 5, 6, 7, 8, 9}
+cars = {
+    "Malibu": 35000,
+    "Spark": 12000,
+    "Cobalt": 18000,
+    "Tracker": 28000
+}
 
-umumiy = set1.intersection(set2)
-faqat_birinchi = set1.difference(set2)
+narxlar = cars.values()
 
-natija = sum(umumiy) - sum(faqat_birinchi)
-print(natija) 
+eng_qimmat_narx = max(narxlar)
+eng_arzon_narx = min(narxlar)
+
+ortacha_narx = sum(narxlar) / len(cars)
+
+print("Eng qimmat narx:", eng_qimmat_narx)
+print("Eng arzon narx:", eng_arzon_narx)
+print("O'rtacha narx:", ortacha_narx)
+

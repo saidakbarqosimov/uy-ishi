@@ -1,8 +1,21 @@
-ali = {"Toshkent", "Samarqand", "Buxoro", "Andijon"}
-vali = {"Toshkent", "Farg'ona", "Buxoro", "Xiva"}
+professions = {
+    "Bill Gates": "Dasturchi",
+    "Cristiano Ronaldo": "Futbolchi",
+    "Elon Musk": "Tadbirkor",
+    "Messi": "Futbolchi"
+}
 
-ikkalasi_ham = ali & vali
-faqat_ali = ali - vali
+ism = input("Ism kiriting: ")
 
-print("Ikkala do'st ham borgan:", ikkalasi_ham)
-print("Faqat ali borgan:", faqat_ali)
+ism_kichik = ism.strip().lower()
+
+topildi = False
+
+for kalit, qiymat in professions.items():
+    if kalit.lower() == ism_kichik: 
+        print(kalit, "ning kasbi:", qiymat)
+        topildi = True
+        break 
+
+if topildi == False:
+    print("Kechirasiz, bunday shaxs ro'yxatda yo'q.")

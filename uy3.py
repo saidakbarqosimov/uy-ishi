@@ -1,6 +1,12 @@
-set1 = {1, 2, 3, 4, 5, 6}
-set2 = {4, 5, 6, 7, 8, 9}
+speed = {
+    "Tesla": 250,
+    "BMW": 240,
+    "Mercedes": 260,
+    "Audi": 230
+}
 
-farq = set1 ^ set2
-natija = sorted(farq, reverse=True)
-print(*natija) # Output: 9 8 7 3 2 1
+saralangan = sorted(speed.items(), key=lambda x: x[1], reverse=True)
+
+print("Tezlik bo'yicha saralash:")
+for mashina, tezlik in saralangan:
+    print(mashina, "-", tezlik, "km/s")
