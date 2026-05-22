@@ -1,21 +1,19 @@
-professions = {
-    "Bill Gates": "Dasturchi",
-    "Cristiano Ronaldo": "Futbolchi",
-    "Elon Musk": "Tadbirkor",
-    "Messi": "Futbolchi"
-}
+A = [
+    [1, 2],
+    [3, 4]
+]
 
-ism = input("Ism kiriting: ")
+B = [
+    [5, 6],
+    [7, 8]
+]
 
-ism_kichik = ism.strip().lower()
+C = [
+    [A[0][0] + B[0][0], A[0][1] + B[0][1]],
+    [A[1][0] + B[1][0], A[1][1] + B[1][1]]
+]
 
-topildi = False
-
-for kalit, qiymat in professions.items():
-    if kalit.lower() == ism_kichik: 
-        print(kalit, "ning kasbi:", qiymat)
-        topildi = True
-        break 
-
-if topildi == False:
-    print("Kechirasiz, bunday shaxs ro'yxatda yo'q.")
+print("C = [")
+print(f"    {C[0]},")
+print(f"    {C[1]}")
+print("]")

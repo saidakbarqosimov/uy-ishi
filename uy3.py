@@ -1,12 +1,10 @@
-speed = {
-    "Tesla": 250,
-    "BMW": 240,
-    "Mercedes": 260,
-    "Audi": 230
-}
+from datetime import date
 
-saralangan = sorted(speed.items(), key=lambda x: x[1], reverse=True)
+bugun = date.today()
+bayram = date(bugun.year, 9, 1)
 
-print("Tezlik bo'yicha saralash:")
-for mashina, tezlik in saralangan:
-    print(mashina, "-", tezlik, "km/s")
+if bugun > bayram:
+    bayram = date(bugun.year + 1, 9, 1)
+
+qolgan_kun = (bayram - bugun).days
+print(f"Keyingi Mustaqillik bayramiga {qolgan_kun} kun qoldi.")

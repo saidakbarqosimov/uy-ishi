@@ -1,13 +1,12 @@
-car_count = {
-    "Chevrolet": 120,
-    "Toyota": 95,
-    "BMW": 60,
-    "Kia": 75
-}
+from translate import Translator
 
-eng_kop_sotilgan = max(car_count, key=car_count.get)
-eng_kam_sotilgan = min(car_count, key=car_count.get)
+tarjimon = Translator(from_lang="uz", to_lang="en")
+lugat = ["salom", "dastur", 2.5, "yordam", 34, "kitob"]
+natija = {}
 
-print("Eng ko'p sotilgan mashina:", eng_kop_sotilgan, "-", car_count[eng_kop_sotilgan], "ta")
-print("Eng kam sotilgan mashina:", eng_kam_sotilgan, "-", car_count[eng_kam_sotilgan], "ta")
+for sozi in lugat:
+    if type(sozi) == str:
+        tarjima = tarjimon.translate(sozi)
+        natija[sozi] = tarjima.lower()
 
+print(natija)

@@ -1,12 +1,11 @@
-movies = {
-    "Titanic": 1997,
-    "Avatar": 2009,
-    "Inception": 2010,
-    "Interstellar": 2014
-}
+from datetime import date
 
-print("2000-yildan keyingi filmlar:")
+yil = int(input("Yil: "))
+oy = int(input("Oy: "))
+kun = int(input("Kun: "))
 
-for nom, yil in movies.items():
-    if yil > 2000:  
-        print(nom) 
+tugilgan_kun = date(yil, oy, kun)
+bugun = date.today()
+farq = bugun - tugilgan_kun
+
+print(f"{farq.days} kun o'tdi")
