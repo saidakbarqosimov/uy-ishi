@@ -1,10 +1,7 @@
-from datetime import date
+with open("tekst.txt", "r", encoding="utf-8") as file:
+    matn = file.read()
 
-bugun = date.today()
-bayram = date(bugun.year, 9, 1)
+yangi_matn = matn.title()
 
-if bugun > bayram:
-    bayram = date(bugun.year + 1, 9, 1)
-
-qolgan_kun = (bayram - bugun).days
-print(f"Keyingi Mustaqillik bayramiga {qolgan_kun} kun qoldi.")
+with open("tekst.txt", "w", encoding="utf-8") as file:
+    file.write(yangi_matn)

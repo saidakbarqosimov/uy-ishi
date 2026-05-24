@@ -1,19 +1,5 @@
-A = [
-    [1, 2],
-    [3, 4]
-]
+with open("sonlar.txt", "r") as file:
+    numbers = [int(x) for x in file.read().split()]
 
-B = [
-    [5, 6],
-    [7, 8]
-]
-
-C = [
-    [A[0][0] + B[0][0], A[0][1] + B[0][1]],
-    [A[1][0] + B[1][0], A[1][1] + B[1][1]]
-]
-
-print("C = [")
-print(f"    {C[0]},")
-print(f"    {C[1]}")
-print("]")
+ortacha_qiymat = round(sum(numbers) / len(numbers))
+print(ortacha_qiymat)

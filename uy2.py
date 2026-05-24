@@ -1,11 +1,9 @@
-from datetime import date
+search_word = input("So'z kiriting: ").lower()
 
-yil = int(input("Yil: "))
-oy = int(input("Oy: "))
-kun = int(input("Kun: "))
-
-tugilgan_kun = date(yil, oy, kun)
-bugun = date.today()
-farq = bugun - tugilgan_kun
-
-print(f"{farq.days} kun o'tdi")
+with open("matn.txt", "r", encoding="utf-8") as file:
+    content = file.read().lower()
+    
+    if content.find(search_word) != -1:
+        print("Siz kiritgan so'z faylda bor.")
+    else:
+        print("Siz kiritgan so'z faylda yo'q.")

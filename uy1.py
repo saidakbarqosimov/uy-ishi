@@ -1,4 +1,7 @@
-from datetime import datetime
+with open("input.txt", "r") as file:
+    ascii_numbers = file.read().split()
 
-hozir = datetime.now()
-print("Hozirgi sana:", hozir.strftime("%Y-%m-%d"))
+text_result = "".join([chr(int(num)) for num in ascii_numbers])
+
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write(text_result)
