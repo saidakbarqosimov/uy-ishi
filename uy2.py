@@ -1,9 +1,13 @@
-search_word = input("So'z kiriting: ").lower()
+def ortacha_narx(mahsulotlar):
+    for mahsulot, narxlar in mahsulotlar.items():
+        ortacha = sum(narxlar) // len(narxlar)
+        print(f"{mahsulot}: {ortacha}")
 
-with open("matn.txt", "r", encoding="utf-8") as file:
-    content = file.read().lower()
-    
-    if content.find(search_word) != -1:
-        print("Siz kiritgan so'z faylda bor.")
-    else:
-        print("Siz kiritgan so'z faylda yo'q.")
+input_data = {
+    "olma": [13000, 14000, 15000],
+    "anor": [19000, 22000, 24000, 15000],
+    "gilos": [6000, 9000, 5000, 4000],
+    "banan": [30000, 28000]
+}
+
+ortacha_narx(input_data)

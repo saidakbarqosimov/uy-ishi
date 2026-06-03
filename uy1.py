@@ -1,7 +1,20 @@
-with open("input.txt", "r") as file:
-    ascii_numbers = file.read().split()
+users = [
+    'Abdulla Abdullaev', 
+    'Samandar Asadov', 
+    'Shaxnoza Jurayeva', 
+    'Ikrom Karimov',
+    'Gulnora Xalilova',
+    'Ziyoda Yuldashova'
+]
 
-text_result = "".join([chr(int(num)) for num in ascii_numbers])
+men = []
+women = []
 
-with open("output.txt", "w", encoding="utf-8") as file:
-    file.write(text_result)
+for user in users:
+    if user.endswith('ov') or user.endswith('ev'):
+        men.append(user)
+    elif user.endswith('va'):
+        women.append(user)
+
+print("men =", men)
+print("women =", women)

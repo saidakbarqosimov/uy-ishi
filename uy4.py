@@ -1,5 +1,6 @@
-with open("sonlar.txt", "r") as file:
-    numbers = [int(x) for x in file.read().split()]
+def bank_kalkulyatori(depozit, foiz, yil):
+    yakuniy_summa = depozit + (depozit * (foiz / 100) * yil)
+    return int(yakuniy_summa)
 
-ortacha_qiymat = round(sum(numbers) / len(numbers))
-print(ortacha_qiymat)
+natija = bank_kalkulyatori(depozit=10000, foiz=24, yil=3)
+print(natija)
