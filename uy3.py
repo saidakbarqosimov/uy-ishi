@@ -1,21 +1,19 @@
-books = [
-    ("O'tkan kunlar", "Roman"),
-    ("Mehrobdan chayon", "Roman"),
-    ("Shum bola", "Povest"),
-    ("Alkimyogar", "Roman"),
-    ("Boy va kambag'al", "Hikoya"),
-    ("Urush va tinchlik", "Roman"),
-    ("Kecha va kunduz", "Roman"),
-    ("Yulduzli tunlar", "Povest"),
-    ("Qorako'z Majnun", "Hikoya"),
-    ("Qalb ko'zi", "Hikoya")
-]
+def arzon_narxni_top(mahsulotlar):
+    natija = [] # Natijalarni saqlash uchun bo'sh ro'yxat
+    
+    for mahsulot in mahsulotlar:
+        nomi = mahsulot[0]   # Mahsulot nomi
+        narxlar = mahsulot[1] # Narxlar ro'yxati
+        
+        # min() funksiyasi ro'yxat ichidagi eng kichik sonni topib beradi
+        eng_arzon = min(narxlar)
+        
+        # Nomi va eng arzon narxni yangi ro'yxat qilib qo'shamiz
+        natija.append([nomi, eng_arzon])
+        
+    return natija
 
-guruhlangan_kitoblar = {}
-
-for nomi, janri in books:
-    if janri not in guruhlangan_kitoblar:
-        guruhlangan_kitoblar[janri] = []
-    guruhlangan_kitoblar[janri].append(nomi)
-
-print(guruhlangan_kitoblar)
+# Tekshirish
+ombor = [['Olma', [12000, 11000, 11500]], ['Banan', [13000, 12500]]]
+print(arzon_narxni_top(ombor))
+# Output: [['Olma', 11000], ['Banan', 12500]]

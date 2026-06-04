@@ -1,12 +1,11 @@
-from translate import Translator
+def raqamni_top(kitob, ism):
+    # dict tarkibidan kalit (ism) borligini tekshiramiz
+    if ism in kitob:
+        return kitob[ism] # Agar ism bo'lsa, uning raqamini qaytaramiz
+    else:
+        return "Topilmadi" # Agar ism bo'lmasa, matn qaytadi
 
-tarjimon = Translator(from_lang="uz", to_lang="en")
-lugat = ["salom", "dastur", 2.5, "yordam", 34, "kitob"]
-natija = {}
-
-for sozi in lugat:
-    if type(sozi) == str:
-        tarjima = tarjimon.translate(sozi)
-        natija[sozi] = tarjima.lower()
-
-print(natija)
+# Tekshirish
+kitob = {'Ali': '998901234567', 'Gulnoza': '998935678901'}
+print(raqamni_top(kitob, 'Ali'))        # Output: 998901234567
+print(raqamni_top(kitob, 'Sardor'))     # Output: Topilmadi
