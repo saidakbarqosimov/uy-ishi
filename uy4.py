@@ -1,16 +1,19 @@
-def birlarni_sana(matritsa):
-    natija = [] # Har bir qatordagi 1 lar sonini yig'ish uchun ro'yxat
-    
-    # Matritsani qatorma-qator aylanib chiqamiz
-    for qator in matritsa:
-        # count() funksiyasi qatorda nechta 1 borligini sanaydi
-        birlar_soni = qator.count(1)
-        # Sanog'ini ro'yxatga qo'shamiz
-        natija.append(birlar_soni)
-        
-    return natija
+class BankHisob:
+    def __init__(self, ism, balans=0):
+        self.ism = ism
+        self.balans = balans
 
-# Tekshirish
-matritsa = [[1, 0, 1], [1, 1, 0], [0, 0, 1]]
-print(birlarni_sana(matritsa))
-# Output: [2, 2, 1]
+    def deposit(self, summa):
+        self.balans += summa
+
+    def yechib_ol(self, summa):
+        if self.balans >= summa:
+            self.balans -= summa
+
+    def hisob(self):
+        return self.balans
+
+mijoz = BankHisob("Alijon")
+mijoz.deposit(1000)
+mijoz.yechib_ol(400)
+print(mijoz.hisob())

@@ -1,19 +1,17 @@
-def baholarni_guruhla(talabalar):
-    guruhlangan = {} # Yangi bo'sh lug'at (dict) ochamiz
-    
-    # Lug'at ichidagi ism va baholarni bittama-bitta olamiz
-    for ism, baho in talabalar.items():
-        # Agar bu baho hali yangi lug'atimizda kalit sifatida bo'lmasa
-        if baho not in guruhlangan:
-            # Shu baho uchun bo'sh ro'yxat yaratamiz va ismni qo'shamiz
-            guruhlangan[baho] = [ism]
-        else:
-            # Agar bu baho oldin ro'yxatga olingan bo'lsa, ro'yxatga ismni qo'shamiz
-            guruhlangan[baho].append(ism)
-            
-    return guruhlangan
+class Kurs:
+    def __init__(self, nomi, davomiylik):
+        self.nomi = nomi
+        self.davomiylik = davomiylik
+        self.talabalar = []
 
-# Tekshirish
-sinf = {'Ali': 5, 'Vali': 4, 'Gulnoza': 5}
-print(baholarni_guruhla(sinf))
-# Output: {5: ['Ali', 'Gulnoza'], 4: ['Vali']}
+    def talaba_qoshish(self, ism):
+        self.talabalar.append(ism)
+
+    def talabalar_soni(self):
+        return len(self.talabalar)
+
+python_kurs = Kurs("Python", "4 oy")
+python_kurs.talaba_qoshish("Anvar")
+python_kurs.talaba_qoshish("Sardor")
+python_kurs.talaba_qoshish("Nodira")
+print(python_kurs.talabalar_soni())

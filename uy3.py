@@ -1,19 +1,21 @@
-def arzon_narxni_top(mahsulotlar):
-    natija = [] # Natijalarni saqlash uchun bo'sh ro'yxat
-    
-    for mahsulot in mahsulotlar:
-        nomi = mahsulot[0]   # Mahsulot nomi
-        narxlar = mahsulot[1] # Narxlar ro'yxati
-        
-        # min() funksiyasi ro'yxat ichidagi eng kichik sonni topib beradi
-        eng_arzon = min(narxlar)
-        
-        # Nomi va eng arzon narxni yangi ro'yxat qilib qo'shamiz
-        natija.append([nomi, eng_arzon])
-        
-    return natija
+class Avtomobil:
+    def __init__(self, model, yil, tezlik=0):
+        self.model = model
+        self.yil = yil
+        self.tezlik = tezlik
 
-# Tekshirish
-ombor = [['Olma', [12000, 11000, 11500]], ['Banan', [13000, 12500]]]
-print(arzon_narxni_top(ombor))
-# Output: [['Olma', 11000], ['Banan', 12500]]
+    def tezlashtir(self):
+        self.tezlik += 10
+
+    def sekinlashtir(self):
+        self.tezlik -= 10
+
+    def info(self):
+        print(f"{self.model}, {self.yil}, {self.tezlik} km/s")
+
+mashina = Avtomobil("Gentra", 2024, 60)
+mashina.tezlashtir()
+mashina.tezlashtir()
+mashina.tezlashtir()
+mashina.sekinlashtir()
+mashina.info()

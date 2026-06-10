@@ -1,20 +1,24 @@
-def mahsulot_sarala(mahsulotlar):
-    saralanganlar = [] # Shartga mos kelgan mahsulotlar uchun ro'yxat
-    
-    # Har bir mahsulot (dict) ustida sikl yuritamiz
-    for mahsulot in mahsulotlar:
-        # Shartni tekshiramiz: narxi 10000 dan kichik VA turi "ichimlik" bo'lishi kerak
-        if mahsulot['narx'] < 10000 and mahsulot['tur'] == 'ichimlik':
-            # Shart bajarilsa, mahsulotni ro'yxatga qo'shamiz
-            saralanganlar.append(mahsulot)
-            
-    return saralanganlar
+class KitobOb:
+    def __init__(self, nomi, muallif):
+        self.nomi, self.muallif = nomi, muallif
 
-# Tekshirish
-ruyxat = [
-  {'nom': 'Cola', 'narx': 9000, 'tur': 'ichimlik'},
-  {'nom': 'Non', 'narx': 3000, 'tur': 'ovqat'},
-  {'nom': 'Suv', 'narx': 5000, 'tur': 'ichimlik'}
-]
-print(mahsulot_sarala(ruyxat))
-# Output: [{'nom': 'Cola', 'narx': 9000, 'tur': 'ichimlik'}, {'nom': 'Suv', 'narx': 5000, 'tur': 'ichimlik'}]
+class Kutubxona:
+    def __init__(self):
+        self.kitoblar = []
+
+    def kitob_qoshish(self, kitob):
+        self.kitoblar.append(kitob)
+
+    def qidirish(self, nom):
+        for k in self.kitoblar:
+            if k.nomi.lower() == nom.lower():
+                return f"{k.nomi}, {k.muallif}"
+        return "Topilmadi"
+
+k1 = KitobOb("Sariq devni minib", "X.To'xtaboyev")
+k2 = KitobOb("Dunyoning ishlari", "O'.Hoshimov")
+
+kutubxona = Kutubxona()
+kutubxona.kitob_qoshish(k1)
+kutubxona.kitob_qoshish(k2)
+print(kutubxona.qidirish("Dunyoning ishlari"))

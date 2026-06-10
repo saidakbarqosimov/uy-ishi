@@ -1,11 +1,16 @@
-def raqamni_top(kitob, ism):
-    # dict tarkibidan kalit (ism) borligini tekshiramiz
-    if ism in kitob:
-        return kitob[ism] # Agar ism bo'lsa, uning raqamini qaytaramiz
-    else:
-        return "Topilmadi" # Agar ism bo'lmasa, matn qaytadi
+import math
 
-# Tekshirish
-kitob = {'Ali': '998901234567', 'Gulnoza': '998935678901'}
-print(raqamni_top(kitob, 'Ali'))        # Output: 998901234567
-print(raqamni_top(kitob, 'Sardor'))     # Output: Topilmadi
+class Uchburchak:
+    def __init__(self, a, b, c):
+        self.a, self.b, self.c = a, b, c
+
+    def perimetr(self):
+        return self.a + self.b + self.c
+
+    def maydon(self):
+        p = self.perimetr() / 2
+        return math.sqrt(p * (p - self.a) * (p - self.b) * (p - self.c))
+
+shakl = Uchburchak(3, 4, 5)
+print(shakl.perimetr())
+print(shakl.maydon())
