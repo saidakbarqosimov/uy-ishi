@@ -1,46 +1,36 @@
-class Talaba:
-    def __init__(self, name, age):
+class Student:
+    def __init__(self, name: str, student_id: str) -> None:
         self.name = name
-        self.age = age
+        self.student_id = student_id
+        self.__grades = []  # Private xususiyat
 
-class Kurs:
-    def __init__(self, kurs_name, kurs_teacher):
-        self.kurs_name = kurs_name
-        self.kurs_teacher = kurs_teacher
-        self.talabalar_soni = 0
-        self.talabalar = []
+    def add_grade(self, grade: int) -> None:
+        # Baho 0-100 oralig'ida ekanligini tekshirish
+        if 0 <= grade <= 100:
+            self.__grades.append(grade)
+        else:
+            print("Xato: Noto'g'ri baho")
 
-    def add(self, new_student):
-        self.talabalar.append(new_student)
-        self.talabalar_soni += 1
+    def calculate_average(self) -> float:
+        if not self.__grades:
+            return 0.0
+        return sum(self.__grades) / len(self.__grades)
 
-    def delete(self, student):
-        if student in self.talabalar:
-            self.talabalar.remove(student)
-            self.talabalar_soni -= 1
+    def get_status(self) -> str:
+        average = self.calculate_average()
+        if 90 <= average <= 100:
+            return "A'lo"
+        elif 80 <= average < 90:
+            return "Yaxshi"
+        elif 70 <= average < 80:
+            return "Qoniqarli"
+        else:
+            return "Qoniqarsiz"
 
-    def info_kurs(self):
-        print(f"Kurs: {self.kurs_name} | O'qituvchi: {self.kurs_teacher} | Talabalar soni: {self.talabalar_soni}")
-        for t in self.talabalar:
-            print(f"- {t.name}, {t.age} yosh")
-
-# 2 ta kurs yaratish
-kurs1 = Kurs("Python Backend", "Anvar Narzullayev")
-kurs2 = Kurs("Frontend React", "Sardor Ahmedov")
-
-# 10 tadan talaba yaratish va qo'shish
-for i in range(1, 11):
-    s1 = Talaba(f"Talaba_{i}", 18 + i % 5)
-    s2 = Talaba(f"Student_{i}", 19 + i % 4)
-    kurs1.add(s1)
-    kurs2.add(s2)
-
-# O'chirish uchun talabalarni saqlab qo'yamiz va haydaymiz
-haydaladigan1 = kurs1.talabalar[0]
-haydaladigan2 = kurs1.talabalar[1]
-
-kurs1.delete(haydaladigan1)
-kurs1.delete(haydaladigan2)
-
-# Natijani tekshirish
-kurs1.info_kurs()
+# Klassdan foydalanish:
+student = Student("Nodira", "S123")
+student.add_grade(85)
+student.add_grade(90)
+print(student.calculate_average())  
+print(student.get_status())         
+student.add_grade(150)             

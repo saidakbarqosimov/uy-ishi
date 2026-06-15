@@ -1,41 +1,49 @@
-class String:
-    def to_lower(self, matn):
-        result = ""
-        for char in matn:
-            if 'A' <= char <= 'Z':
-                result += chr(ord(char) + 32)
-            else:
-                result += char
-        return result
+class User:
+    def __init__(self, username: str) -> None:
+        self.username = username
+        self.friends = []
 
-    def to_upper(self, matn):
-        result = ""
-        for char in matn:
-            if 'a' <= char <= 'z':
-                result += chr(ord(char) - 32)
-            else:
-                result += char
-        return result
+    def add_friend(self, friend: str) -> bool:
+        if friend in self.friends:
+            return False
+        self.friends.append(friend)
+        return True
 
-    def is_lower(self, matn):
-        has_alpha = False
-        for char in matn:
-            if 'A' <= char <= 'Z':
-                return False
-            if 'a' <= char <= 'z':
-                has_alpha = True
-        return has_alpha
+    def remove_friend(self, friend: str) -> bool:
+        if friend in self.friends:
+            self.friends.remove(friend)
+            return True
+        return False
 
-    def is_upper(self, matn):
-        has_alpha = False
-        for char in matn:
-            if 'a' <= char <= 'z':
-                return False
-            if 'A' <= char <= 'Z':
-                has_alpha = True
-        return has_alpha
+    def list_friends(self) -> list[str]:
+        return self.friends
 
-# Tekshirish
-st = String()
-print(st.to_lower("Dasturchi LPT"))  # dasturchi lpt
-print(st.is_upper("HELLO"))          # True
+    def is_friend(self, friend: str) -> bool:
+        return friend in self.friends
+
+    def mutual_friends(self, other_user: 'User') -> list[str]:
+        # Ikkala foydalanuvchida bor bo'lgan umumiy do'stlarni topish
+        return [friend for friend in self.friends if friend in other_user.friends]
+
+# Namuna:
+user1 = User("Ali")
+user2 = User("Vali")
+
+print(user1.add_friend("Sami"))    
+print(user1.add_friend("Vali"))   
+print(user1.add_friend("Sami"))   
+
+print(user2.add_friend("Ali"))    
+print(user2.add_friend("Sami"))   
+
+print(user1.list_friends())      
+print(user2.list_friends())        
+
+print(user1.is_friend("Vali"))    
+print(user1.is_friend("Botir"))   
+
+print(user1.mutual_friends(user2)) 
+
+print(user1.remove_friend("Vali")) # True
+print(user1.remove_friend("Botir"))# False
+print(user1.list_friends())        # ['Sami']

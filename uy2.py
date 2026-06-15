@@ -1,37 +1,37 @@
-class Convertor:
-    def __init__(self):
-        # Transliteratsiya lug'ati
-        self.en_to_ru_map = {
-            'A': 'А', 'B': 'Б', 'V': 'В', 'G': 'Г', 'D': 'Д', 'E': 'Е', 'Yo': 'Ё', 'Zh': 'Ж',
-            'Z': 'З', 'I': 'И', 'Y': 'Й', 'K': 'К', 'L': 'Л', 'M': 'М', 'N': 'Н', 'O': 'О',
-            'P': 'П', 'R': 'Р', 'S': 'С', 'T': 'Т', 'U': 'У', 'F': 'Ф', 'Kh': 'Х', 'Ts': 'Ц',
-            'Ch': 'Ч', 'Sh': 'Ш', 'Shch': 'Щ', 'Yu': 'Ю', 'Ya': 'Я',
-            'a': 'а', 'b': 'б', 'v': 'в', 'g': 'г', 'd': 'д', 'e': 'е', 'yo': 'ё', 'zh': 'ж',
-            'z': 'з', 'i': 'и', 'y': 'й', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о',
-            'p': 'п', 'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'f': 'ф', 'kh': 'х', 'ts': 'ц',
-            'ch': 'ч', 'sh': 'ш', 'shch': 'щ', 'yu': 'ю', 'ya': 'я'
-        }
-        # Teskari lug'at yaratish
-        self.ru_to_en_map = {v: k for k, v in self.en_to_ru_map.items()}
+class Employee:
+    def __init__(self, name: str, employee_id: str, hourly_rate: float = 15.0) -> None:
+        self.name = name
+        self.employee_id = employee_id
+        self.hourly_rate = hourly_rate
+        self.__working_hours = []  # Private xususiyat
 
-    def en_to_ru(self, text):
-        # Murakkab harflarni (Yo, Yu, Ya, Ch, Sh) birinchi almashtiramiz
-        for key in ['Yo', 'Zh', 'Kh', 'Ts', 'Ch', 'Sh', 'Yu', 'Ya', 'yo', 'zh', 'kh', 'ts', 'ch', 'sh', 'yu', 'ya']:
-            if key in self.en_to_ru_map:
-                text = text.replace(key, self.en_to_ru_map[key])
-        
-        # Qolgan bitta harflilarni almashtiramiz
-        result = ""
-        for char in text:
-            result += self.en_to_ru_map.get(char, char)
-        return result
+    def log_hours(self, hour: int) -> bool:
+        # Ish soati 0 dan 24 gacha bo'lishi kerak
+        if 0 <= hour <= 24:
+            self.__working_hours.append(hour)
+            return True
+        return False
 
-    def ru_to_en(self, text):
-        result = ""
-        for char in text:
-            result += self.ru_to_en_map.get(char, char)
-        return result
+    def total_hours(self) -> int:
+        return sum(self.__working_hours)
 
-# Tekshirish
-conv = Convertor()
-print(conv.en_to_ru("Salom dunyo"))  # Салом дунё
+    def calculate_salary(self) -> float:
+        return self.total_hours() * self.hourly_rate
+
+    def reset_hours(self) -> None:
+        self.__working_hours.clear()
+
+# Namuna:
+employee = Employee("Javlon", "E101", hourly_rate=20.0)
+
+print(employee.log_hours(8))   
+print(employee.log_hours(9))   
+print(employee.log_hours(10))  
+print(employee.log_hours(25))  
+
+print(employee.total_hours())      
+print(employee.calculate_salary())  
+
+employee.reset_hours()
+print(employee.total_hours())       # 0
+print(employee.calculate_salary())  # 0.0
