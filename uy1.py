@@ -1,36 +1,25 @@
-class Student:
-    def __init__(self, name: str, student_id: str) -> None:
-        self.name = name
-        self.student_id = student_id
-        self.__grades = []  # Private xususiyat
+import sys
+import random
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtCore import Qt
 
-    def add_grade(self, grade: int) -> None:
-        # Baho 0-100 oralig'ida ekanligini tekshirish
-        if 0 <= grade <= 100:
-            self.__grades.append(grade)
-        else:
-            print("Xato: Noto'g'ri baho")
+app = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle("Masala 1 - Random Son")
+window.setFixedSize(300, 150)
 
-    def calculate_average(self) -> float:
-        if not self.__grades:
-            return 0.0
-        return sum(self.__grades) / len(self.__grades)
+layout = QVBoxLayout()
 
-    def get_status(self) -> str:
-        average = self.calculate_average()
-        if 90 <= average <= 100:
-            return "A'lo"
-        elif 80 <= average < 90:
-            return "Yaxshi"
-        elif 70 <= average < 80:
-            return "Qoniqarli"
-        else:
-            return "Qoniqarsiz"
+label = QLabel("Son chiqadi...")
+label.setAlignment(Qt.AlignCenter)
+label.setStyleSheet("font-size: 28px; font-weight: bold; color: #2c3e50;")
 
-# Klassdan foydalanish:
-student = Student("Nodira", "S123")
-student.add_grade(85)
-student.add_grade(90)
-print(student.calculate_average())  
-print(student.get_status())         
-student.add_grade(150)             
+btn = QPushButton("Random son chiqar")
+btn.setStyleSheet("padding: 8px; font-size: 14px; background: #3498db; color: white; border-radius: 5px;")
+btn.clicked.connect(lambda: label.setText(str(random.randint(1, 100))))
+
+layout.addWidget(label)
+layout.addWidget(btn)
+window.setLayout(layout)
+window.show()
+sys.exit(app.exec_())

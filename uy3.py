@@ -1,49 +1,56 @@
-class User:
-    def __init__(self, username: str) -> None:
-        self.username = username
-        self.friends = []
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit
+from PyQt5.QtCore import Qt
 
-    def add_friend(self, friend: str) -> bool:
-        if friend in self.friends:
-            return False
-        self.friends.append(friend)
-        return True
+app = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle("Masala 3 - Kalkulyator")
+window.setFixedSize(360, 200)
 
-    def remove_friend(self, friend: str) -> bool:
-        if friend in self.friends:
-            self.friends.remove(friend)
-            return True
-        return False
+layout = QVBoxLayout()
 
-    def list_friends(self) -> list[str]:
-        return self.friends
+input_layout = QHBoxLayout()
+edit1 = QLineEdit()
+edit2 = QLineEdit()
+edit1.setPlaceholderText("1-son")
+edit2.setPlaceholderText("2-son")
+for e in [edit1, edit2]:
+    e.setStyleSheet("padding: 6px; font-size: 14px; border: 1px solid #bdc3c7; border-radius: 4px;")
+    input_layout.addWidget(e)
 
-    def is_friend(self, friend: str) -> bool:
-        return friend in self.friends
+result_label = QLabel("Natija: ")
+result_label.setAlignment(Qt.AlignCenter)
+result_label.setStyleSheet("font-size: 20px; font-weight: bold; color: #27ae60;")
 
-    def mutual_friends(self, other_user: 'User') -> list[str]:
-        # Ikkala foydalanuvchida bor bo'lgan umumiy do'stlarni topish
-        return [friend for friend in self.friends if friend in other_user.friends]
+def hisobla(amal):
+    try:
+        a = float(edit1.text())
+        b = float(edit2.text())
+        if amal == '+':
+            res = a + b
+        elif amal == '-':
+            res = a - b
+        elif amal == '*':
+            res = a * b
+        elif amal == '/':
+            if b == 0:
+                result_label.setText("Xato: 0 ga bo'lib bo'lmaydi!")
+                return
+            res = a / b
+        result_label.setText(f"Natija: {res:.4g}")
+    except ValueError:
+        result_label.setText("Xato: son kiriting!")
 
-# Namuna:
-user1 = User("Ali")
-user2 = User("Vali")
+btn_layout = QHBoxLayout()
+for text, amal in [("Qo'shish", '+'), ("Ayirish", '-'), ("Ko'paytirish", '*'), ("Bo'lish", '/')]:
+    btn = QPushButton(text)
+    btn.setStyleSheet("padding: 7px; font-size: 12px; background: #e74c3c; color: white; border-radius: 4px;")
+    btn.clicked.connect(lambda checked, a=amal: hisobla(a))
+    btn_layout.addWidget(btn)
 
-print(user1.add_friend("Sami"))    
-print(user1.add_friend("Vali"))   
-print(user1.add_friend("Sami"))   
-
-print(user2.add_friend("Ali"))    
-print(user2.add_friend("Sami"))   
-
-print(user1.list_friends())      
-print(user2.list_friends())        
-
-print(user1.is_friend("Vali"))    
-print(user1.is_friend("Botir"))   
-
-print(user1.mutual_friends(user2)) 
-
-print(user1.remove_friend("Vali")) # True
-print(user1.remove_friend("Botir"))# False
-print(user1.list_friends())        # ['Sami']
+layout.addLayout(input_layout)
+layout.addWidget(result_label)
+layout.addLayout(btn_layout)
+window.setLayout(layout)
+window.show()
+sys.exit(app.exec_())

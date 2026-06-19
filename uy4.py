@@ -1,22 +1,33 @@
-class Taqvim:
-    def hijriyga(self, g_yil):
-        # Grigoriyandan Hijriyga o'tkazish formulasi
-        h_yil = int((g_yil - 622) * (33 / 32))
-        return h_yil
+import sys
+import random
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtCore import Qt
 
-    def grigoriyanga(self, h_yil):
-        # Hijriydan Grigoriyanga o'tkazish formulasi
-        g_yil = int(h_yil * (32 / 33) + 622)
-        return g_yil
+RANGLAR = ["red", "blue", "green", "yellow", "orange", "purple", "hotpink", "cyan"]
 
-    def kabisami(self, yil):
-        # 4 ga bo'linsa va 100 ga bo'linmasa, Yoki 400 ga bo'linsa kabisa
-        if (yil % 4 == 0 and yil % 100 != 0) or (yil % 400 == 0):
-            return True
-        return False
+app = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle("Masala 4 - Rang Almashtiruvchi")
+window.setFixedSize(300, 150)
 
-# Tekshirish
-tq = Taqvim()
-print(f"2024-yil hijriyda: {tq.hijriyga(2024)}")     # 1445 yoki 1446
-print(f"1445-yil grigoriyanda: {tq.grigoriyanga(1445)}") # 2023 yoki 2024
-print(f"2024 kabisami?: {tq.kabisami(2024)}")         # True
+layout = QVBoxLayout()
+
+label = QLabel("Matn rangi o'zgaradi!")
+label.setAlignment(Qt.AlignCenter)
+label.setStyleSheet("font-size: 22px; font-weight: bold;")
+
+btn = QPushButton("Rangni almashtir")
+btn.setStyleSheet("padding: 8px; font-size: 14px; background: #34495e; color: white; border-radius: 5px;")
+
+def rang_almastir():
+    rang = random.choice(RANGLAR)
+    label.setStyleSheet(f"font-size: 22px; font-weight: bold; color: {rang};")
+    label.setText(f"Rang: {rang}")
+
+btn.clicked.connect(rang_almastir)
+
+layout.addWidget(label)
+layout.addWidget(btn)
+window.setLayout(layout)
+window.show()
+sys.exit(app.exec_())

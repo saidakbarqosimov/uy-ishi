@@ -1,37 +1,34 @@
-class Employee:
-    def __init__(self, name: str, employee_id: str, hourly_rate: float = 15.0) -> None:
-        self.name = name
-        self.employee_id = employee_id
-        self.hourly_rate = hourly_rate
-        self.__working_hours = []  # Private xususiyat
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
+from PyQt5.QtCore import Qt
 
-    def log_hours(self, hour: int) -> bool:
-        # Ish soati 0 dan 24 gacha bo'lishi kerak
-        if 0 <= hour <= 24:
-            self.__working_hours.append(hour)
-            return True
-        return False
+app = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle("Masala 2 - Ism/Familiya/Sana")
+window.setFixedSize(350, 160)
 
-    def total_hours(self) -> int:
-        return sum(self.__working_hours)
+layout = QVBoxLayout()
 
-    def calculate_salary(self) -> float:
-        return self.total_hours() * self.hourly_rate
+label = QLabel("Tugmani bosing...")
+label.setAlignment(Qt.AlignCenter)
+label.setStyleSheet("font-size: 22px; font-weight: bold; color: #2c3e50; padding: 10px;")
 
-    def reset_hours(self) -> None:
-        self.__working_hours.clear()
+btn_layout = QHBoxLayout()
 
-# Namuna:
-employee = Employee("Javlon", "E101", hourly_rate=20.0)
+btn1 = QPushButton("Ism")
+btn2 = QPushButton("Familiya")
+btn3 = QPushButton("Tug'ilgan sana")
 
-print(employee.log_hours(8))   
-print(employee.log_hours(9))   
-print(employee.log_hours(10))  
-print(employee.log_hours(25))  
+for btn in [btn1, btn2, btn3]:
+    btn.setStyleSheet("padding: 8px; font-size: 13px; background: #9b59b6; color: white; border-radius: 5px;")
+    btn_layout.addWidget(btn)
 
-print(employee.total_hours())      
-print(employee.calculate_salary())  
+btn1.clicked.connect(lambda: label.setText("SAIDAKBER"))
+btn2.clicked.connect(lambda: label.setText("QOSIMOV"))
+btn3.clicked.connect(lambda: label.setText("17.10.2010"))
 
-employee.reset_hours()
-print(employee.total_hours())       # 0
-print(employee.calculate_salary())  # 0.0
+layout.addWidget(label)
+layout.addLayout(btn_layout)
+window.setLayout(layout)
+window.show()
+sys.exit(app.exec_())
