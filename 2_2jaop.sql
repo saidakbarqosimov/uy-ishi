@@ -1,0 +1,2 @@
+SELECT * FROM Meva 
+ORDER BY LENGTH(nomi), narxi DESC;
