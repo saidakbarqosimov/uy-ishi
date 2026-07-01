@@ -1,2 +1,3 @@
-SELECT * FROM Meva 
-ORDER BY LENGTH(nomi), narxi DESC;
+SELECT genre, COUNT(*) AS book_count 
+FROM books 
+GROUP BY genre;

@@ -1,2 +1,3 @@
-SELECT * FROM Aeroport 
-WHERE MONTH(uchish_sanasi) IN (3, 4, 5);
+SELECT students.name, groups.group_name 
+FROM students 
+INNER JOIN groups ON students.group_id = groups.id;

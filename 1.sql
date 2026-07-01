@@ -1,19 +1,32 @@
 
-CREATE TABLE Meva (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nomi VARCHAR(50),
-    narxi DECIMAL(10, 2),
-    navi VARCHAR(50)
+CREATE TABLE groups (
+    id INT PRIMARY KEY,
+    group_name VARCHAR(50)
 );
 
-INSERT INTO Meva (nomi, narxi, navi) VALUES
-('Olma', 12000, 'Besh yulduz'),
-('Anor', 25000, 'Tuya tish'),
-('Uzum', 18000, 'Husayni'),
-('Banan', 22000, 'Import'),
-('Olxori', 8000, 'Qora olxori'),
-('Orik', 15000, 'Subhoni'),
-('Gilos', 45000, 'Amiri'),
-('Shaftoli', 35000, 'Lola'),
-('Tarvuz', 9000, 'Marmar'),
-('Qovun', 55000, 'Obinovvot');
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    group_id INT,
+    FOREIGN KEY (group_id) REFERENCES groups(id)
+);
+
+CREATE TABLE subjects (
+    id INT PRIMARY KEY,
+    subject_name VARCHAR(50)
+);
+
+CREATE TABLE grades (
+    id INT PRIMARY KEY,
+    student_id INT,
+    subject_id INT, 
+    grade INT,
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (subject_id) REFERENCES subjects(id)
+);
+
+INSERT INTO groups VALUES (1, '941-guruh'), (2, '942-guruh');
+INSERT INTO students VALUES (1, 'Ali', 1), (2, 'Vali', 1), (3, 'Olim', 2), (4, 'Sardor', NULL);
+INSERT INTO subjects VALUES (1, 'Matematika'), (2, 'Fizika'), (3, 'Tarix');
+INSERT INTO grades VALUES (1, 1, 1, 95), (2, 2, 1, 85), (3, 3, 2, 92);
+

@@ -1,3 +1,3 @@
-DELETE FROM Aeroport 
-WHERE uchish_vaqti BETWEEN '14:00:00' AND '18:00:00' 
-AND qonish_shaxri = 'Toshkent';
+SELECT students.name, grades.grade 
+FROM students 
+LEFT JOIN grades ON students.id = grades.student_id;
