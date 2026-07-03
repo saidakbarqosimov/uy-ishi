@@ -1,24 +1,44 @@
-class KitobOb:
-    def __init__(self, nomi, muallif):
-        self.nomi, self.muallif = nomi, muallif
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel
 
-class Kutubxona:
+class LibraryApp(QWidget):
     def __init__(self):
-        self.kitoblar = []
+        super().__init__()
+        self.setWindowTitle("Kutubxona qidiruv tizimi")
+        self.resize(350, 250)
 
-    def kitob_qoshish(self, kitob):
-        self.kitoblar.append(kitob)
+        self.books = [
+            "Python Asoslari", 
+            "Flask Dasturlash", 
+            "Sun'iy Intellekt", 
+            "Django Mukammal Kurs", 
+            "Ma'lumotlar Strukturasi"
+        ]
 
-    def qidirish(self, nom):
-        for k in self.kitoblar:
-            if k.nomi.lower() == nom.lower():
-                return f"{k.nomi}, {k.muallif}"
-        return "Topilmadi"
+        self.search_box = QLineEdit()
+        self.search_box.setPlaceholderText("Kitob nomini yozing...")
+        self.search_box.textChanged.connect(self.filter_books)
 
-k1 = KitobOb("Sariq devni minib", "X.To'xtaboyev")
-k2 = KitobOb("Dunyoning ishlari", "O'.Hoshimov")
+        self.list_widget = QListWidget()
+        
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("Qidiruv:"))
+        layout.addWidget(self.search_box)
+        layout.addWidget(self.list_widget)
+        self.setLayout(layout)
 
-kutubxona = Kutubxona()
-kutubxona.kitob_qoshish(k1)
-kutubxona.kitob_qoshish(k2)
-print(kutubxona.qidirish("Dunyoning ishlari"))
+        self.filter_books()
+
+    def filter_books(self):
+        self.list_widget.clear()
+        query = self.search_box.text().lower().strip()
+
+        for book in self.books:
+            if query in book.lower():
+                self.list_widget.addItem(book)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = LibraryApp()
+    win.show()
+    sys.exit(app.exec_())

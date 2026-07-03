@@ -1,39 +1,41 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QLineEdit
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QComboBox
 
-app = QApplication(sys.argv)
-window = QWidget()
-window.setWindowTitle("Masala 5 - Parol Tekshiruvchi")
-window.setFixedSize(300, 170)
+class ScheduleApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Dars jadvali")
+        self.resize(300, 180)
 
-layout = QVBoxLayout()
+        self.schedule = {
+            "Dushanba": ["Matematika", "Fizika", "Ona tili"],
+            "Seshanba": ["Ingliz tili", "Tarix", "Kimyo"],
+            "Chorshanba": ["Informatika", "Adabiyot"]
+        }
 
-edit = QLineEdit()
-edit.setEchoMode(QLineEdit.Password)
-edit.setPlaceholderText("Parolni kiriting...")
-edit.setStyleSheet("padding: 8px; font-size: 14px; border: 1px solid #bdc3c7; border-radius: 4px;")
+        self.combo = QComboBox()
+        self.combo.addItems(self.schedule.keys())
+        self.combo.currentIndexChanged.connect(self.show_schedule)
 
-result_label = QLabel("")
-result_label.setAlignment(Qt.AlignCenter)
-result_label.setStyleSheet("font-size: 18px; font-weight: bold;")
+        self.label_res = QLabel("")
 
-btn = QPushButton("Tekshirish")
-btn.setStyleSheet("padding: 8px; font-size: 14px; background: #2ecc71; color: white; border-radius: 5px;")
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("Kunni tanlang:"))
+        layout.addWidget(self.combo)
+        layout.addWidget(QLabel("<b>Darslar ro'yxati:</b>"))
+        layout.addWidget(self.label_res)
+        self.setLayout(layout)
 
-def tekshir():
-    if edit.text() == "12345":
-        result_label.setText("✅ Parol to'g'ri")
-        result_label.setStyleSheet("font-size: 18px; font-weight: bold; color: green;")
-    else:
-        result_label.setText("❌ Noto'g'ri parol")
-        result_label.setStyleSheet("font-size: 18px; font-weight: bold; color: red;")
+        self.show_schedule()
 
-btn.clicked.connect(tekshir)
+    def show_schedule(self):
+        day = self.combo.currentText()
+        lessons = self.schedule.get(day, [])
+        text = "\n".join([f"🔹 {lesson}" for lesson in lessons])
+        self.label_res.setText(text)
 
-layout.addWidget(edit)
-layout.addWidget(btn)
-layout.addWidget(result_label)
-window.setLayout(layout)
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = ScheduleApp()
+    win.show()
+    sys.exit(app.exec_())

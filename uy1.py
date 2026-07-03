@@ -1,25 +1,40 @@
 import sys
-import random
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QComboBox
 
-app = QApplication(sys.argv)
-window = QWidget()
-window.setWindowTitle("Masala 1 - Random Son")
-window.setFixedSize(300, 150)
+class PhoneBookApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Telefon kitobi")
+        self.resize(300, 150)
 
-layout = QVBoxLayout()
+        self.contacts = {
+            "Ali": "+998901234567",
+            "Vali": "+998919876543",
+            "Olim": "+998935554433"
+        }
 
-label = QLabel("Son chiqadi...")
-label.setAlignment(Qt.AlignCenter)
-label.setStyleSheet("font-size: 28px; font-weight: bold; color: #2c3e50;")
+        self.combo = QComboBox()
+        self.combo.addItems(self.contacts.keys())
+        self.combo.currentIndexChanged.connect(self.show_number)
 
-btn = QPushButton("Random son chiqar")
-btn.setStyleSheet("padding: 8px; font-size: 14px; background: #3498db; color: white; border-radius: 5px;")
-btn.clicked.connect(lambda: label.setText(str(random.randint(1, 100))))
+        self.label_title = QLabel("Xodimni tanlang:")
+        self.label_result = QLabel("")
+        
+        layout = QVBoxLayout()
+        layout.addWidget(self.label_title)
+        layout.addWidget(self.combo)
+        layout.addWidget(self.label_result)
+        self.setLayout(layout)
 
-layout.addWidget(label)
-layout.addWidget(btn)
-window.setLayout(layout)
-window.show()
-sys.exit(app.exec_())
+        self.show_number()
+
+    def show_number(self):
+        name = self.combo.currentText()
+        phone = self.contacts.get(name, "Topilmadi")
+        self.label_result.setText(f"Telefon: <b>{phone}</b>")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = PhoneBookApp()
+    win.show()
+    sys.exit(app.exec_())

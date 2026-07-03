@@ -1,34 +1,41 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QComboBox
 
-app = QApplication(sys.argv)
-window = QWidget()
-window.setWindowTitle("Masala 2 - Ism/Familiya/Sana")
-window.setFixedSize(350, 160)
+class BudgetApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Byudjet nazorati")
+        self.resize(300, 150)
 
-layout = QVBoxLayout()
+        self.budget = {
+            "Yanvar": [1000000, 500000],
+            "Fevral": [1200000, 600000],
+            "Mart": [1500000, 600000]
+        }
 
-label = QLabel("Tugmani bosing...")
-label.setAlignment(Qt.AlignCenter)
-label.setStyleSheet("font-size: 22px; font-weight: bold; color: #2c3e50; padding: 10px;")
+        self.combo = QComboBox()
+        self.combo.addItems(self.budget.keys())
+        self.combo.currentIndexChanged.connect(self.calculate_budget)
 
-btn_layout = QHBoxLayout()
+        self.label_title = QLabel("Oyni tanlang:")
+        self.label_result = QLabel("")
 
-btn1 = QPushButton("Ism")
-btn2 = QPushButton("Familiya")
-btn3 = QPushButton("Tug'ilgan sana")
+        layout = QVBoxLayout()
+        layout.addWidget(self.label_title)
+        layout.addWidget(self.combo)
+        layout.addWidget(self.label_result)
+        self.setLayout(layout)
 
-for btn in [btn1, btn2, btn3]:
-    btn.setStyleSheet("padding: 8px; font-size: 13px; background: #9b59b6; color: white; border-radius: 5px;")
-    btn_layout.addWidget(btn)
+        self.calculate_budget()
 
-btn1.clicked.connect(lambda: label.setText("SAIDAKBER"))
-btn2.clicked.connect(lambda: label.setText("QOSIMOV"))
-btn3.clicked.connect(lambda: label.setText("17.10.2010"))
+    def calculate_budget(self):
+        month = self.combo.currentText()
+        expenses = self.budget.get(month, [])
+        total = sum(expenses)
+        self.label_result.setText(f"Umumiy xarajat: <b>{total:,} so'm</b>")
 
-layout.addWidget(label)
-layout.addLayout(btn_layout)
-window.setLayout(layout)
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = BudgetApp()
+    win.show()
+    sys.exit(app.exec_())

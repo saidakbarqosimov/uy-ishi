@@ -1,56 +1,60 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
 
-app = QApplication(sys.argv)
-window = QWidget()
-window.setWindowTitle("Masala 3 - Kalkulyator")
-window.setFixedSize(360, 200)
+class OfficeApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Ofis xodimlari")
+        self.resize(350, 200)
 
-layout = QVBoxLayout()
+        self.staff = {
+            "Dilshod": "Direktor",
+            "Aziza": "Hisobchi",
+            "Anvar": "Dasturchi"
+        }
 
-input_layout = QHBoxLayout()
-edit1 = QLineEdit()
-edit2 = QLineEdit()
-edit1.setPlaceholderText("1-son")
-edit2.setPlaceholderText("2-son")
-for e in [edit1, edit2]:
-    e.setStyleSheet("padding: 6px; font-size: 14px; border: 1px solid #bdc3c7; border-radius: 4px;")
-    input_layout.addWidget(e)
+        self.input_name = QLineEdit()
+        self.input_name.setPlaceholderText("Ism kiriting...")
+        self.input_name.textChanged.connect(self.search_staff)
 
-result_label = QLabel("Natija: ")
-result_label.setAlignment(Qt.AlignCenter)
-result_label.setStyleSheet("font-size: 20px; font-weight: bold; color: #27ae60;")
+        self.input_role = QLineEdit()
+        self.input_role.setPlaceholderText("Yangi xodim lavozimi...")
 
-def hisobla(amal):
-    try:
-        a = float(edit1.text())
-        b = float(edit2.text())
-        if amal == '+':
-            res = a + b
-        elif amal == '-':
-            res = a - b
-        elif amal == '*':
-            res = a * b
-        elif amal == '/':
-            if b == 0:
-                result_label.setText("Xato: 0 ga bo'lib bo'lmaydi!")
-                return
-            res = a / b
-        result_label.setText(f"Natija: {res:.4g}")
-    except ValueError:
-        result_label.setText("Xato: son kiriting!")
+        self.btn_add = QPushButton("Yangi xodim qo'shish")
+        self.btn_add.clicked.connect(self.add_staff)
 
-btn_layout = QHBoxLayout()
-for text, amal in [("Qo'shish", '+'), ("Ayirish", '-'), ("Ko'paytirish", '*'), ("Bo'lish", '/')]:
-    btn = QPushButton(text)
-    btn.setStyleSheet("padding: 7px; font-size: 12px; background: #e74c3c; color: white; border-radius: 4px;")
-    btn.clicked.connect(lambda checked, a=amal: hisobla(a))
-    btn_layout.addWidget(btn)
+        self.label_info = QLabel("Xodim lavozimi: -")
 
-layout.addLayout(input_layout)
-layout.addWidget(result_label)
-layout.addLayout(btn_layout)
-window.setLayout(layout)
-window.show()
-sys.exit(app.exec_())
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("Xodim ismi:"))
+        layout.addWidget(self.input_name)
+        layout.addWidget(self.label_info)
+        layout.addWidget(QLabel("Yangi xodim uchun lavozim:"))
+        layout.addWidget(self.input_role)
+        layout.addWidget(self.btn_add)
+        self.setLayout(layout)
+
+    def search_staff(self):
+        name = self.input_name.text().strip()
+        if name in self.staff:
+            self.label_info.setText(f"Xodim lavozimi: <b>{self.staff[name]}</b>")
+        else:
+            self.label_info.setText("Xodim lavozimi: <i>Bunday xodim topilmadi</i>")
+
+    def add_staff(self):
+        name = self.input_name.text().strip()
+        role = self.input_role.text().strip()
+
+        if name and role:
+            self.staff[name] = role
+            QMessageBox.information(self, "Muvaffaqiyatli", f"{name} ({role}) bazaga qo'shildi!")
+            self.input_role.clear()
+            self.search_staff()
+        else:
+            QMessageBox.warning(self, "Xatolik", "Ism va lavozim maydonlarini to'ldiring!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = OfficeApp()
+    win.show()
+    sys.exit(app.exec_())
